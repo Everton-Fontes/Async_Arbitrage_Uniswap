@@ -412,3 +412,13 @@ class Factory_Arbitrage(ABC):
     async def _calc_surface(self):
         result = await asyncio.gather(*[asyncio.create_task(self.surface_arbitrage(tri)) for tri in await self.triangular_pair_list()])
         return result
+
+    async def describe_triangle(self, triangle: Triangles_pair) -> None:
+        if triangle:
+            print(triangle.combined)
+            print(triangle.direction)
+            print(triangle.trade_description_1)
+            print(triangle.trade_description_2)
+            print(triangle.trade_description_3)
+            print(f'Amount out{triangle.profit_loss}')
+            print(f'Percentage of Gain {triangle.profit_loss_perc}')
