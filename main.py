@@ -14,13 +14,13 @@ async def main():
     await bot.load_triangules()
 
     # get info from uniswap
-    info = bot.info()
+    info = await bot.info()
 
     # update prices for all triangles
     await bot.set_triangular_prices(info)
 
     # calculate all triangles
-    triangles = bot._calc_surface()
+    triangles = await bot._calc_surface()
 
     # describe all triangules
     for triangule in triangles:

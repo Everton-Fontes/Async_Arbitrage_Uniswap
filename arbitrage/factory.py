@@ -415,10 +415,10 @@ class Factory_Arbitrage(ABC):
 
     async def describe_triangle(self, triangle: Triangles_pair) -> None:
         if triangle:
-            print(triangle.combined)
+            print('\n', triangle.combined)
             print(triangle.direction)
             print(triangle.trade_description_1)
             print(triangle.trade_description_2)
             print(triangle.trade_description_3)
             print(f'Amount out{triangle.profit_loss}')
-            print(f'Percentage of Gain {triangle.profit_loss_perc}')
+            print(f'Percentage of Gain {triangle.profit_loss_perc}\n')
