@@ -1,5 +1,8 @@
+import os
 from arbitrage import Uniswap_arb
 import asyncio
+
+from arbitrage.arbitrage_uniswap import _Uniswap
 
 
 async def main():
@@ -13,12 +16,11 @@ async def main():
     # it take a while if the first time, after get fast
     await bot.load_triangules()
 
-    # get info from uniswap
+    # Set info for uniswap object
     info = await bot.info()
 
-    # update prices for all triangles
+    # Update all pairs of triangles
     await bot.set_triangular_prices(info)
-
     # calculate all triangles
     triangles = await bot._calc_surface()
 

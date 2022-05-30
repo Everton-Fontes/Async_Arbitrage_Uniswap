@@ -3,7 +3,7 @@ import json
 import aiohttp
 
 
-class Uniswap:
+class Uniswap_GraphQL:
     def __init__(self) -> None:
         self.url = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
         self.query = ''

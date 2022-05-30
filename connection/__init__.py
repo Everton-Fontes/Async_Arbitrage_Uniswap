@@ -1,1 +1,1 @@
-from connection.uniswap import Uniswap
+from connection.uniswapp import Uniswap_GraphQL

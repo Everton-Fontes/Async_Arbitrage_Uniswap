@@ -16,7 +16,7 @@ def unwrap_triangule(json_dict: dict):
             quote = Crypto(v['quote']['symbol'], v['quote']
                            ['address'], v['quote']['decimals'])
             p = Pair(pair='', base=base, quote=quote,
-                     address=v['address'])
+                     address=v['address'], fee=int(v['fee']))
             v = p
         json_dict[k] = v
 
@@ -29,6 +29,7 @@ class Crypto:
         self.__price = dec_price
         self.__address = address
         self.__decimals = int(decimals)
+        self.__wei = 10**self.decimals
 
     @property
     def symbol(self) -> str:
@@ -46,15 +47,20 @@ class Crypto:
     def decimals(self) -> int:
         return self.__decimals
 
+    @property
+    def wei(self) -> int:
+        return self.__wei
+
     def set_price(self, ask: float) -> float:
         self.__price = ask
         return self.__price
 
 
 class Pair:
-    def __init__(self, pair: str, base: Crypto = None, quote: Crypto = None, address: str = '') -> None:
+    def __init__(self, pair: str, base: Crypto = None, quote: Crypto = None, address: str = '', fee=0) -> None:
         self.__base = base
         self.__quote = quote
+        self.__fee = fee
         if not self.base or not self.quote:
             self.set_cryptos(pair)
         self.__pair = f'{self.base.symbol}_{self.quote.symbol}'
@@ -65,6 +71,10 @@ class Pair:
     @property
     def pair(self) -> str:
         return self.__pair
+
+    @property
+    def fee(self) -> str:
+        return self.__fee
 
     @property
     def address(self) -> str:

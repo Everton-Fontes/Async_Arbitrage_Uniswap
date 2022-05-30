@@ -98,34 +98,37 @@ class Factory_Arbitrage(ABC):
             file.write(json.dumps([
                 {'pair_a': {
                     'address': tri.pair_a.address,
+                    'fee': tri.pair_a.fee,
                     'base': {'symbol': tri.pair_a.base.symbol,
-                             'address': tri.pair_a.base.symbol,
+                             'address': tri.pair_a.base.address,
                              'decimals': tri.pair_a.base.decimals,
                              },
                     'quote': {'symbol': tri.pair_a.quote.symbol,
-                              'address': tri.pair_a.quote.symbol,
+                              'address': tri.pair_a.quote.address,
                               'decimals': tri.pair_a.quote.decimals,
                               }
                 },
                     'pair_b': {
                         'address': tri.pair_b.address,
+                        'fee': tri.pair_b.fee,
                         'base': {'symbol': tri.pair_b.base.symbol,
-                                 'address': tri.pair_b.base.symbol,
+                                 'address': tri.pair_b.base.address,
                                  'decimals': tri.pair_b.base.decimals,
                                  },
                         'quote': {'symbol': tri.pair_b.quote.symbol,
-                                  'address': tri.pair_b.quote.symbol,
+                                  'address': tri.pair_b.quote.address,
                                   'decimals': tri.pair_b.quote.decimals,
                                   }
                 },
                     'pair_c': {
                         'address': tri.pair_c.address,
+                        'fee': tri.pair_c.fee,
                         'base': {'symbol': tri.pair_c.base.symbol,
-                                 'address': tri.pair_c.base.symbol,
+                                 'address': tri.pair_c.base.address,
                                  'decimals': tri.pair_c.base.decimals,
                                  },
                         'quote': {'symbol': tri.pair_c.quote.symbol,
-                                  'address': tri.pair_c.quote.symbol,
+                                  'address': tri.pair_c.quote.address,
                                   'decimals': tri.pair_c.quote.decimals,
                                   }
                 }}
@@ -363,7 +366,8 @@ class Factory_Arbitrage(ABC):
                         triangle.direction_trade_3 = 'quote_to_base'
                         triangle.contract_3 = triangle.pair_b
 
-                    triangle.acquired_coin_t3 = triangle.acquired_coin_t2 * triangle.swap_3_rate
+                    triangle.acquired_coin_t3 = (
+                        triangle.acquired_coin_t2 * triangle.swap_3_rate) * self.fee
                     calculated = 1
 
                 # SCENARIO 4 if a_base macthes c_base
@@ -401,7 +405,7 @@ class Factory_Arbitrage(ABC):
             triangle.trade_description_1 = f'Start with {triangle.swap_1.symbol} of {self.value} - '
             triangle.trade_description_1 += f'Swap at {triangle.swap_1_rate} for {triangle.swap_2.symbol} acquiring {triangle.acquired_coin_t1}'
             triangle.trade_description_2 = f'Swap {triangle.acquired_coin_t1} of {triangle.swap_2.symbol} '
-            triangle.trade_description_2 += f'at {triangle.swap_2_rate} for {triangle.swap_3.symbol} acquiring {triangle.acquired_coin_t2}'
+            triangle.trade_description_2 += f' at {triangle.swap_2_rate} for {triangle.swap_3.symbol} acquiring {triangle.acquired_coin_t2}'
             triangle.trade_description_3 = f'Swap {triangle.acquired_coin_t2} of {triangle.swap_3.symbol} '
             triangle.trade_description_3 += f'at {triangle.swap_3_rate} for {triangle.swap_1.symbol} acquiring {triangle.acquired_coin_t3}'
             triangle.direction = direction
@@ -420,5 +424,5 @@ class Factory_Arbitrage(ABC):
             print(triangle.trade_description_1)
             print(triangle.trade_description_2)
             print(triangle.trade_description_3)
-            print(f'Amount out{triangle.profit_loss}')
+            print(f'Amount out {triangle.profit_loss}')
             print(f'Percentage of Gain {triangle.profit_loss_perc}\n')
